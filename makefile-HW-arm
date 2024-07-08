@@ -1,0 +1,25 @@
+BUILDROOT_HOME=	/home/ece531/buildroot
+
+CC=$(BUILDROOT_HOME)/output/host/usr/bin/arm-linux-gcc
+CFLAGS=--sysroot=$(BUILDROOT_HOME)/output/staging
+INCLUDES=
+LFLAGS=
+
+LIBS=-lcurl -uClibc -lc
+
+SRC=HW3.c
+OBJ=$(SRC:.c=.o)
+MAIN=HW3
+
+RM=rm -rf
+
+.c.o:
+	$(CC) $(CFLAGS) $(INCLUDES) -c $< -o $@
+
+$(MAIN): $(OBJ)
+	$(CC) $(CFLAGS) $(INCLUDES) -o $(MAIN) $(OBJ) $(LFLAGS) $(LIBS)
+
+all: $(MAIN)
+
+clean:
+	$(RM) $(MAIN) *.o *~
