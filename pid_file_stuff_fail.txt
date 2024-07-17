@@ -1,0 +1,23 @@
+/*// ADDED - Create PID file directory and make it writeable
+  struct stat st;
+  if (stat(PID_DIR, &st) != 0) {
+    if (mkdir(PID_DIR, 0755) != 0) {
+      syslog(LOG_ERR, "Couldn't create directory %s: %s", PID_DIR, strerror(errno));
+      exit(EXIT_FAILURE);
+    }
+  }
+// ADDED - Create the PID file and write the PID to it
+  FILE *fp = fopen(PID_FILE, "w");
+  if (fp == NULL) {
+    syslog(LOG_ERR, "Couldn't create PID file: %s", strerror(errno));
+    exit(EXIT_FAILURE);
+  }
+  fprintf(fp, "%d\n", getpid());
+  fclose(fp);
+
+// Setting the permissions for the PID file
+  if (chmod(PID_FILE, S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH) != 0) {
+    syslog(LOG_ERR, "Couldn't set permissions for PID file: %s", strerror(errno));
+    exit(EXIT_FAILURE);
+  }
+*/
